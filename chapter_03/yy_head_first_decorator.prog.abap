@@ -9,18 +9,18 @@ REPORT yy_head_first_decorator.
 *&---------------------------------------------------------------------*
 CLASS lcl_beverage DEFINITION ABSTRACT.
   PUBLIC SECTION.
-* for ABAP 7.5 use...
-*    TYPES:
-*      BEGIN OF ENUM ty_size,
-*        tall, grande, venti,
-*      END OF ENUM ty_size.
-    TYPES ty_size TYPE i.
-    CONSTANTS:
-      BEGIN OF c_size,
-        tall   TYPE ty_size VALUE 0,
-        grande TYPE ty_size VALUE 1,
-        venti  TYPE ty_size VALUE 2,
-      END OF c_size.
+    TYPES:
+      BEGIN OF ENUM ty_size,
+        tall, grande, venti,
+      END OF ENUM ty_size.
+* for ABAP 7.4 use...
+*    TYPES ty_size TYPE i.
+*    CONSTANTS:
+*      BEGIN OF c_size,
+*        tall   TYPE ty_size VALUE 0,
+*        grande TYPE ty_size VALUE 1,
+*        venti  TYPE ty_size VALUE 2,
+*      END OF c_size.
     METHODS:
       set_size IMPORTING iv_size TYPE ty_size,
       size RETURNING VALUE(rv_size) TYPE ty_size,
@@ -31,7 +31,7 @@ CLASS lcl_beverage DEFINITION ABSTRACT.
   PROTECTED SECTION.
     DATA:
       mv_description TYPE string VALUE 'Unknown Beverage',
-      mv_size        TYPE ty_size VALUE c_size-tall.
+      mv_size        TYPE ty_size VALUE tall.
 ENDCLASS.
 
 CLASS lcl_beverage IMPLEMENTATION.
@@ -224,9 +224,9 @@ CLASS lcl_soy IMPLEMENTATION.
   ENDMETHOD.
   METHOD cost.
     rv_amount = super->cost( ) + SWITCH #( size( )
-      WHEN c_size-tall   THEN c_addin_cost-tall
-      WHEN c_size-grande THEN c_addin_cost-grande
-      WHEN c_size-venti  THEN c_addin_cost-venti ).
+      WHEN tall   THEN c_addin_cost-tall
+      WHEN grande THEN c_addin_cost-grande
+      WHEN venti  THEN c_addin_cost-venti ).
   ENDMETHOD.
 ENDCLASS.
 
@@ -301,7 +301,7 @@ CLASS lcl_starbuzz_coffee IMPLEMENTATION.
 
     " Also, give us a Venti sized House Blend with Soy, Mocha, and Whip
     lo_beverage3 = NEW lcl_house_blend( ).
-    lo_beverage3->set_size( lcl_beverage=>c_size-venti ).
+    lo_beverage3->set_size( lcl_beverage=>venti ).
     lo_beverage3 = NEW lcl_soy( lo_beverage3 ).
     lo_beverage3 = NEW lcl_mocha( lo_beverage3 ).
     lo_beverage3 = NEW lcl_whip( lo_beverage3 ).
@@ -314,7 +314,7 @@ CLASS lcl_starbuzz_coffee IMPLEMENTATION.
     lo_beverage4 = NEW lcl_decaf( ).
     lo_beverage4 = NEW lcl_soy( lo_beverage4 ).
     lo_beverage4 = NEW lcl_milk( lo_beverage4 ).
-    lo_beverage4->set_size( lcl_beverage=>c_size-grande ).
+    lo_beverage4->set_size( lcl_beverage=>grande ).
     cl_demo_output=>write_text( |Beverage #4 description and cost...| ).
     cl_demo_output=>write( |{ lo_beverage4->description( ) }| &
                            | ${ lo_beverage4->cost( ) DECIMALS = 2 }| ).

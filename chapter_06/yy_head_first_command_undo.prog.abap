@@ -315,16 +315,18 @@ CLASS lcl_remote_control_with_undo IMPLEMENTATION.
     mt_off_commands[ iv_slot ] = io_off_command.
   ENDMETHOD.
   METHOD on_button_was_pushed.
-    " for ABAP 7.5 use:  mt_on_commands[ iv_slot ]->execute( ).
-    CAST lif_command( mt_on_commands[ iv_slot ] )->execute( ).
     " When a button is pressed, we take the command and execute it;
     " then we save a reference to it in the mo_undo_command instance
     " variable. We do this for both "on" commands and "off" commands.
+    mt_on_commands[ iv_slot ]->execute( ).
+    " for ABAP 7.4 use:
+    " CAST lif_command( mt_on_commands[ iv_slot ] )->execute( ).
     mo_undo_command = mt_on_commands[ iv_slot ].
   ENDMETHOD.
   METHOD off_button_was_pushed.
-    " for ABAP 7.5 use:  mt_off_commands[ iv_slot ]->execute( ).
-    CAST lif_command( mt_off_commands[ iv_slot ] )->execute( ).
+    mt_off_commands[ iv_slot ]->execute( ).
+    " for ABAP 7.4 use:
+    " CAST lif_command( mt_off_commands[ iv_slot ] )->execute( ).
     mo_undo_command = mt_off_commands[ iv_slot ].
   ENDMETHOD.
   METHOD undo_button_was_pushed.

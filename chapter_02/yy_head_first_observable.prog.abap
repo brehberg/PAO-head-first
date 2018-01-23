@@ -148,9 +148,10 @@ CLASS lcl_current_conditions_display IMPLEMENTATION.
     " In update(), we first make sure the observable is of type Weather
     " Data and then we use its getter methods to obtain the temperature
     " and humidity measurements. After that we call display().
-    " for ABAP 7.5 use: CHECK sender IS INSTANCE OF lcl_weather_data.
-    CHECK cl_abap_typedescr=>describe_by_object_ref( sender ) =
-          cl_abap_typedescr=>describe_by_name( 'LCL_WEATHER_DATA' ).
+    CHECK sender IS INSTANCE OF lcl_weather_data.
+    " for ABAP 7.4 use:
+    " CHECK cl_abap_typedescr=>describe_by_object_ref( sender ) =
+    "       cl_abap_typedescr=>describe_by_name( 'LCL_WEATHER_DATA' ).
     DATA(lo_weather_data) = CAST lcl_weather_data( sender ).
 
     mv_temperature = lo_weather_data->temperature( ).
