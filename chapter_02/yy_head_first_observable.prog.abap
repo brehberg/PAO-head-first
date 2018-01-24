@@ -191,9 +191,10 @@ CLASS lcl_statistics_display IMPLEMENTATION.
     SET HANDLER lif_observer~update FOR mo_observable.
   ENDMETHOD.
   METHOD lif_observer~update.
-    " for ABAP 7.5 use: CHECK sender IS INSTANCE OF lcl_weather_data.
-    CHECK cl_abap_typedescr=>describe_by_object_ref( sender ) =
-          cl_abap_typedescr=>describe_by_name( 'LCL_WEATHER_DATA' ).
+    CHECK sender IS INSTANCE OF lcl_weather_data.
+    " for ABAP 7.4 use:
+    " CHECK cl_abap_typedescr=>describe_by_object_ref( sender ) =
+    "       cl_abap_typedescr=>describe_by_name( 'LCL_WEATHER_DATA' ).
     DATA(lo_weather_data) = CAST lcl_weather_data( sender ).
 
     DATA(lv_temp) = lo_weather_data->temperature( ).
@@ -239,9 +240,10 @@ CLASS lcl_forecast_display IMPLEMENTATION.
     SET HANDLER lif_observer~update FOR mo_observable.
   ENDMETHOD.
   METHOD lif_observer~update.
-    " for ABAP 7.5 use: CHECK sender IS INSTANCE OF lcl_weather_data.
-    CHECK cl_abap_typedescr=>describe_by_object_ref( sender ) =
-          cl_abap_typedescr=>describe_by_name( 'LCL_WEATHER_DATA' ).
+    CHECK sender IS INSTANCE OF lcl_weather_data.
+    " for ABAP 7.4 use:
+    " CHECK cl_abap_typedescr=>describe_by_object_ref( sender ) =
+    "       cl_abap_typedescr=>describe_by_name( 'LCL_WEATHER_DATA' ).
     DATA(lo_weather_data) = CAST lcl_weather_data( sender ).
 
     mv_last_pressure = mv_current_pressure.
@@ -285,9 +287,10 @@ CLASS lcl_heat_index_display IMPLEMENTATION.
     SET HANDLER lif_observer~update FOR mo_observable.
   ENDMETHOD.
   METHOD lif_observer~update.
-    " for ABAP 7.5 use: CHECK sender IS INSTANCE OF lcl_weather_data.
-    CHECK cl_abap_typedescr=>describe_by_object_ref( sender ) =
-          cl_abap_typedescr=>describe_by_name( 'LCL_WEATHER_DATA' ).
+    CHECK sender IS INSTANCE OF lcl_weather_data.
+    " for ABAP 7.4 use:
+    " CHECK cl_abap_typedescr=>describe_by_object_ref( sender ) =
+    "       cl_abap_typedescr=>describe_by_name( 'LCL_WEATHER_DATA' ).
     DATA(lo_weather_data) = CAST lcl_weather_data( sender ).
 
     mv_heat_index = compute_heat_index(
